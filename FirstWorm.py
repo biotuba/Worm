@@ -8,7 +8,7 @@ import re
 import time
 
 url = 'https://www.einvoice.nat.gov.tw/home/Article!showArticleList?articleType=4'
-driverPath = r'e:\PythonProject\Worm\chromedriver.exe'
+driverPath = r'chromedriver.exe'
 
 with webdriver.Chrome(executable_path=driverPath) as driver:  # ChromeDriver
     driver.get(url)  # 輸入範例網址，交給瀏覽器 
