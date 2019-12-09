@@ -7,11 +7,13 @@ import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
+import base64
+from email.mime.text import MIMEText
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://mail.google.com/']
 
-def GetLabels():
+def GetService():
     """Shows basic usage of the Gmail API.
     Lists the user's Gmail labels.
     """
@@ -34,10 +36,11 @@ def GetLabels():
         with open('token.pickle', 'wb') as token:
             pickle.dump(creds, token)
 
-    service = build('gmail', 'v1', credentials=creds)
+    return build('gmail', 'v1', credentials=creds)
 
-    # Call the Gmail API
-    results = service.users().labels().list(userId='me').execute()
+# Call the Gmail API
+def ShowLabels():
+    results = GetService().users().labels().list(userId='me').execute()
     labels = results.get('labels', [])
 
     if not labels:
@@ -47,11 +50,13 @@ def GetLabels():
         for label in labels:
             print(label['name'])
 
-#try:
-#    import argparse
-#    flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
-#except ImportError:
-#    flags = None
+def create_message(sender, to, subject, message_text): # Create a message for an email.
+    message = MIMEText(message_text)
+    message['to'] = to
+    message['from'] = sender
+    message['subject'] = subject
+    raw = base64.urlsafe_b64encode(bytes(str(message), "utf-8"))
+    return {'raw': raw.decode()}
 
 def SendMessage(service, user_id, message): # Send an email message.
     try:
@@ -62,13 +67,10 @@ def SendMessage(service, user_id, message): # Send an email message.
     except errors.HttpError as error:
       print ('An error occurred: %s' % error)
 
-def main( sender, recepient, subject, text_body ):
-    store = oauth2client.file.Storage('credentials.json')
-    credentials = store.get()
-    http = credentials.authorize(httplib2.Http())
-    service = discovery.build('gmail', 'v1', http=http)
-    testMessage = create_message( sender, recepient, subject, text_body )
-    SendMessage( service, sender, testMessage )
+def main():
+    service = GetService()
+    testMessage = create_message( "biotuba@gmail.com", "poppyaxe@gmail.com", "Test Subject", "I Love You" )
+    SendMessage( service, "biotuba@gmail.com", testMessage )
 
 if __name__ == '__main__':
-    main( 'biotuba@gmail.com', 'biotuba@gmail.com', 'Test mail subject', 'Test mail body' )
+    main()

@@ -26,3 +26,5 @@
 [1203/225855.524:ERROR:exception_snapshot_win.cc(98)] thread ID 13360 not found in process
 [1203/230241.132:ERROR:process_reader_win.cc(123)] NtOpenThread: {æ‹’çµ•å­˜å–} ç¨‹åºå·²è«‹æ±‚å­˜å–ä¸€ç‰©ä»¶ï¼Œä½†æœªè¢«æˆèˆ‡å­˜å–æ¬Šã€‚ (0xc0000022)
 [1203/230241.133:ERROR:exception_snapshot_win.cc(98)] thread ID 11644 not found in process
+[1207/080350.073:ERROR:process_reader_win.cc(123)] NtOpenThread: {©Úµ´¦s¨ú} µ{§Ç¤w½Ğ¨D¦s¨ú¤@ª«¥ó¡A¦ı¥¼³Q±Â»P¦s¨úÅv¡C (0xc0000022)
+[1207/080350.541:ERROR:exception_snapshot_win.cc(98)] thread ID 8368 not found in process
